@@ -1,6 +1,6 @@
 services:
-  app-counries:
-    container_name: app-counries-container
+  app-countries:
+    container_name: app-countries-container
     build:
       context: .
       dockerfile: Dockerfile

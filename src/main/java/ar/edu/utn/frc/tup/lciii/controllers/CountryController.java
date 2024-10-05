@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,11 +46,11 @@ public class CountryController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> save(@RequestBody(required = true) SaveCountries saveCountries) {
+    public ResponseEntity<List<CountryDTO>> save(@RequestBody(required = true) SaveCountries saveCountries) {
         if (saveCountries.getAmountOfCountryToSave() > 10) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of countries to save cannot exceed 10");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ArrayList<>());
         }
-        countryService.saveCountries(saveCountries.getAmountOfCountryToSave());
-        return ResponseEntity.status(HttpStatus.OK).body("Countries saved successfully");
+        List<CountryDTO> response = countryService.saveCountries(saveCountries.getAmountOfCountryToSave());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
