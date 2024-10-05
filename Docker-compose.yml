@@ -1,0 +1,32 @@
+services:
+  app-counries:
+    container_name: app-counries-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database-container:3306/countries
+      SPRING_DATASOURCE_USERNAME: fede
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      service-net-app:
+    restart: on-failure
+
+  mysql:
+    container_name: database-container
+    image: mysql:8.0
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: countries
+      MYSQL_USER: fede
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      service-net-app:
+
+
+networks:
+  service-net-app:
